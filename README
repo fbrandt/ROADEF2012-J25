@@ -1,0 +1,41 @@
+Constraint-Based Very Large-Scale Neighborhood Search for Machine Reassignment
+
+The Problem was posed by the ROADEF/EURO Challenge 2012.
+See http://challenge.roadef.org/2012/en/ for the model and further details.
+
+This is the final submission of Team J25 consisting of:
+  Felix Brandt <brandt@fzi.de>
+  Jochen Speck <speck@kit.edu>
+  Markus Voelker <markus.voelker@kit.edu>
+
+The presented approach is basically a very large-scale neighborhood search with
+a constraint program (CP) to iteratively find improved solutions. In each
+iteration a subset of processes (chosen by a neighborhood strategy) is "lifted",
+i.e. considered for reassignment, while all other processes stay on their
+current machine. Our constraint program then efficiently searches for promising
+reassignments in the neighborhood. The overall search procedure alternates
+between different neighborhood strategies until the time limit is reached.
+
+As CP framework we use the open source toolkit Gecode in its 3.7.0 release.
+
+All code is released under MIT license.
+
+This folder contains the following classes/files:
+
+Instance                  Representation of a problem instance
+SchedulePlotter           Create HTML report from model and assignment
+ReAssignment              Representation of the current solution state
+ProcessFixing             Store of processes currently not available for reassignment
+
+RescheduleSpace           Gecode search space of our model
+ProcessPropagator         Custom propagator calculating cost of a process after assignment
+CostPropagator            Custom propagator between a process' machine domain and its cost
+BestCostBrancher          Custom brancher of our model
+
+BaseSearch                Abstract local search procedure
+IterativeSearch           Abstract iterative local search procedure
+RandomSearch              Random local search
+ProcessNeighborhoodSearch Local search lifting processes of similar size
+TargetMoveSearch          Local search lifting a big process and smaller processes on a potential target machine
+UndoMoveSearch            Local search trying to move processes back to their original machine
+
